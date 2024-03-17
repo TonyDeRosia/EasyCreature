@@ -1,7 +1,7 @@
 # Easy Creature Add-on for Blender
 
 ## Description
-Easy Creature enhances Blender's modeling workflow, automating the application of Mirror, Skin, and Subdivision Surface modifiers for character and creature design. This tool streamlines the creation process from simple to complex organic shapes.
+Easy Creature enhances Blender's modeling workflow, automating the application of Mirror, Skin, and Subdivision Surface modifiers for character and creature design. This tool streamlines the creation process from simple to complex organic shapes. Remember control + shift B to help with beveling for heads, necks or any shape you may want to add some beveling to.
 
 ## Important Usage Note
 Optimized for starting from minimal geometry (such as a single vertex), this add-on simplifies the progression to detailed models. However, it's less suited for pre-existing complex geometries, where performance and mesh management might be challenging.
