@@ -1,5 +1,5 @@
 bl_info = {
-    "name": "Easy Creature",
+    "name": "Easy Creature Blender 4.1",
     "author": "Anthony DeRosia",
     "version": (1, 0),
     "blender": (4, 1, 0),
@@ -17,6 +17,9 @@ class EASYCREATURE_OT_add_modifiers(bpy.types.Operator):
 
     def execute(self, context):
         obj = context.active_object
+        if obj is None:
+            self.report({'ERROR'}, "No active object found. Please select an object.")
+            return {'CANCELLED'}
         
         # Add Mirror Modifier
         mirror_modifier = obj.modifiers.new(name="Mirror", type='MIRROR')
@@ -38,6 +41,9 @@ class EASYCREATURE_OT_apply_modifiers(bpy.types.Operator):
 
     def execute(self, context):
         obj = context.active_object
+        if obj is None:
+            self.report({'ERROR'}, "No active object found. Please select an object.")
+            return {'CANCELLED'}
         
         # Iterate and apply all modifiers
         for modifier in obj.modifiers:
@@ -70,4 +76,3 @@ def unregister():
 
 if __name__ == "__main__":
     register()
-
