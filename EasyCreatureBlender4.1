@@ -1,0 +1,72 @@
+bl_info = {
+    "name": "Easy Creature",
+    "author": "Your Name",
+    "version": (1, 0),
+    "blender": (4, 1, 0),
+    "description": "Easily add and apply a set of modifiers for creature modeling",
+    "category": "Object",
+}
+
+import bpy
+
+class EASYCREATURE_OT_add_modifiers(bpy.types.Operator):
+    """Add Mirror, Skin, and Subdivision modifiers in sequence"""
+    bl_idname = "object.easy_creature_add_modifiers"
+    bl_label = "Add Creature Modifiers"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        obj = context.active_object
+        
+        # Add Mirror Modifier
+        mirror_modifier = obj.modifiers.new(name="Mirror", type='MIRROR')
+        
+        # Add Skin Modifier
+        skin_modifier = obj.modifiers.new(name="Skin", type='SKIN')
+        
+        # Add Subdivision Modifier
+        subdiv_modifier = obj.modifiers.new(name="Subdivision", type='SUBSURF')
+        subdiv_modifier.levels = 2  # Example subdivision level
+
+        return {'FINISHED'}
+
+class EASYCREATURE_OT_apply_modifiers(bpy.types.Operator):
+    """Apply all modifiers for the active object"""
+    bl_idname = "object.easy_creature_apply_modifiers"
+    bl_label = "Apply All Modifiers"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        obj = context.active_object
+        
+        # Iterate and apply all modifiers
+        for modifier in obj.modifiers:
+            bpy.ops.object.modifier_apply({"object": obj}, modifier=modifier.name)
+        
+        return {'FINISHED'}
+
+class EASYCREATURE_PT_panel(bpy.types.Panel):
+    """Creates a Panel in the Object properties window"""
+    bl_label = "Easy Creature"
+    bl_idname = "OBJECT_PT_easy_creature"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'Easy Creature'
+
+    def draw(self, context):
+        layout = self.layout
+        layout.operator(EASYCREATURE_OT_add_modifiers.bl_idname)
+        layout.operator(EASYCREATURE_OT_apply_modifiers.bl_idname)
+
+def register():
+    bpy.utils.register_class(EASYCREATURE_OT_add_modifiers)
+    bpy.utils.register_class(EASYCREATURE_OT_apply_modifiers)
+    bpy.utils.register_class(EASYCREATURE_PT_panel)
+
+def unregister():
+    bpy.utils.unregister_class(EASYCREATURE_OT_add_modifiers)
+    bpy.utils.unregister_class(EASYCREATURE_OT_apply_modifiers)
+    bpy.utils.unregister_class(EASYCREATURE_PT_panel)
+
+if __name == "__main__":
+    register()
